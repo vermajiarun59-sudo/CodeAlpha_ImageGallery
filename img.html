@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Gallery</title>
+    <link rel="stylesheet" href="img.css">
+</head>
+<body>
+
+    <div class="full-img" id="fullImgBox">
+       
+        <span class="close" onclick="closeFullImg()">X</span>
+
+          <img id="fullImg">
+        <div class="controls">
+         <button class="prev" onclick="changeImage(-1)"><</button>
+         <button class="next" onclick="changeImage(1)">></button>
+        </div>
+    </div>   
+
+        <h1>Image Gallery</h1>
+        <div class="img-gallery">
+            <!-- Images are added here -->
+            <img src="image1.jpg" onclick="openFullImg(this.src)">
+            <img src="image2.jpg" onclick="openFullImg(this.src)">
+            <img src="image3.jpg" onclick="openFullImg(this.src)">
+            <img src="image4.jpg" onclick="openFullImg(this.src)">
+            <img src="image5.jpg" onclick="openFullImg(this.src)">
+            <img src="image6.jpg" onclick="openFullImg(this.src)">
+            <img src="image7.jpg" onclick="openFullImg(this.src)">
+            <img src="image8.jpg" onclick="openFullImg(this.src)">
+        </div>
+    
+    <script>
+        let images = document.querySelectorAll(".img-gallery img");
+let fullImgBox = document.getElementById("fullImgBox");
+let fullImg = document.getElementById("fullImg");
+
+let currentIndex = 0;
+
+function openFullImg(pic) {
+
+    currentIndex = [...images].findIndex(img => img.src === pic);
+
+    fullImg.src = pic;
+    fullImgBox.style.display = "flex";
+}
+
+function closeFullImg() {
+    fullImgBox.style.display = "none";
+}
+
+function changeImage(direction) {
+
+    currentIndex += direction;
+
+    if(currentIndex < 0){
+        currentIndex = images.length - 1;
+    }
+
+    if(currentIndex >= images.length){
+        currentIndex = 0;
+    }
+
+    fullImg.src = images[currentIndex].src;
+}
+
+document.addEventListener("keydown", function(e){
+
+    if(fullImgBox.style.display === "flex"){
+
+        if(e.key === "ArrowRight"){
+            changeImage(1);
+        }
+
+        if(e.key === "ArrowLeft"){
+            changeImage(-1);
+        }
+
+        if(e.key === "Escape"){
+            closeFullImg();
+        }
+    }
+
+});
+    </script>
+</body>
+</html>
